@@ -1,6 +1,97 @@
 import type { WordItem, Variable, EmotionOption, SentimentOption } from '@/types/wordSelector.types'
 
 /**
+ * API del backend para extracción de palabras clave
+ * Utiliza NLTK, SpaCy y extracción de keywords
+ */
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+
+/**
+ * Extrae palabras clave de un texto usando el backend
+ * @param text - Texto del cual extraer palabras
+ * @param language - Idioma ('spanish' o 'english')
+ * @param topN - Número de top palabras a retornar
+ * @returns Array de palabras clave
+ */
+export const extractKeywordsFromBackend = async (
+  text: string,
+  language: string = 'spanish',
+  topN: number = 10
+): Promise<string[]> => {
+  try {
+    if (!text || text.trim().length === 0) {
+      return []
+    }
+
+    const response = await fetch(`${API_BASE_URL}/nlp/extract-ranked-keywords`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text,
+        min_length: 3,
+        language,
+        top_n: topN
+      })
+    })
+
+    if (!response.ok) {
+      console.error('Error en extracción de palabras:', response.statusText)
+      return []
+    }
+
+    const data = await response.json()
+    return data.keywords || []
+  } catch (error) {
+    console.error('Error extrayendo palabras del backend:', error)
+    return []
+  }
+}
+
+/**
+ * Extrae frases de un texto usando el backend
+ * @param text - Texto del cual extraer frases
+ * @param phraseLength - Longitud de las frases (1-5)
+ * @param language - Idioma ('spanish' o 'english')
+ * @returns Array de frases
+ */
+export const extractPhrasesFromBackend = async (
+  text: string,
+  phraseLength: number = 2,
+  language: string = 'spanish'
+): Promise<string[]> => {
+  try {
+    if (!text || text.trim().length === 0) {
+      return []
+    }
+
+    const response = await fetch(`${API_BASE_URL}/nlp/extract-phrases`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text,
+        phrase_length: Math.min(Math.max(phraseLength, 1), 5),
+        language
+      })
+    })
+
+    if (!response.ok) {
+      console.error('Error en extracción de frases:', response.statusText)
+      return []
+    }
+
+    const data = await response.json()
+    return data.phrases || []
+  } catch (error) {
+    console.error('Error extrayendo frases del backend:', error)
+    return []
+  }
+}
+
+/**
  * Palabras extraídas de respuestas de encuestas.
  * Simulación del procesamiento con NLTK, SpaCy y LengExtract:
  * - Tokenización y lematización (NLTK)
