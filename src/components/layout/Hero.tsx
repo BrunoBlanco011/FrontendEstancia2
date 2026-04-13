@@ -34,7 +34,7 @@ function Hero() {
   }
 
   const colors = ["#06b6d4", "#3b82f6", "#6366f1"]
-  
+
   const sampleArcs = [
     {
       order: 1,
@@ -75,24 +75,24 @@ function Hero() {
         duration: 1,
         ease: "power3.out"
       })
-      .from(descriptionRef.current, {
-        x: -80,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out"
-      }, "-=0.5")
-      .from(buttonRef.current, {
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        ease: "back.out(1.7)"
-      }, "-=0.3")
-      .from(globeRef.current, {
-        scale: 0.7,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power2.out"
-      }, "-=1")
+        .from(descriptionRef.current, {
+          x: -80,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.out"
+        }, "-=0.5")
+        .from(buttonRef.current, {
+          y: 30,
+          opacity: 0,
+          duration: 0.6,
+          ease: "back.out(1.7)"
+        }, "-=0.3")
+        .from(globeRef.current, {
+          scale: 0.7,
+          opacity: 0,
+          duration: 1.2,
+          ease: "power2.out"
+        }, "-=1")
     })
 
     return () => ctx.revert()
@@ -132,7 +132,7 @@ function Hero() {
 
       <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
         <div className="grid grid-cols-2 gap-16 items-center">
-          
+
           <div className="space-y-8">
             <h1
               ref={titleRef}
@@ -140,23 +140,23 @@ function Hero() {
             >
               Sistema de Encuestas
             </h1>
-            
+
             <p
               ref={descriptionRef}
               className="text-2xl text-gray-300 leading-relaxed"
             >
-              Crea, administra y analiza encuestas de manera profesional. 
+              Crea, administra y analiza encuestas de manera profesional.
               Obtén resultados en tiempo real y toma decisiones basadas en datos.
             </p>
 
             <Link
               ref={buttonRef}
-              to="/dashboard"
+              to="/login"
               onMouseEnter={handleButtonHover}
               onMouseLeave={handleButtonLeave}
               className="inline-block bg-blue-600 text-white px-10 py-5 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-xl"
             >
-              Ir al Dashboard
+              Iniciar Sesión
             </Link>
           </div>
 

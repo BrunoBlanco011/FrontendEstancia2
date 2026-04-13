@@ -1,16 +1,11 @@
-import { API_CONFIG } from "@/utils/config";
+// Este archivo se mantiene por compatibilidad pero los servicios principales
+// están en sus archivos individuales:
+// - survey.service.ts
+// - question.service.ts
+// - response.service.ts
+// - file.service.ts
 
-const API_URL = API_CONFIG.baseURL
-
-export const surveyService = {
-    createSurvey: async (surveyData: any) => {
-        const response = await fetch(`${API_URL}${API_CONFIG.endpoints.surveys}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(surveyData)
-        })
-        return response.json()
-    }
-}
+export { surveyService } from './survey.service'
+export { questionService } from './question.service'
+export { responseService } from './response.service'
+export { fileService } from './file.service'

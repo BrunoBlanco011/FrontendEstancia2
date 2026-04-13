@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { FileSpreadsheet, Download, Trash2, Search, Calendar, User, FileType, RefreshCw } from 'lucide-react'
 import { fileService } from '@/services/file.service'
-import { API_CONFIG } from '@/utils/config'
 import type { FileData } from '@/types/file'
 
 function ViewFiles() {

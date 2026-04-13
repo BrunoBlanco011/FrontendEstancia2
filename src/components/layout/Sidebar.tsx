@@ -10,8 +10,11 @@ import {
   Activity,
   ChevronDown,
   FolderOpen,
-  BookType 
+  BookType,
+  LogOut
 } from "lucide-react"
+
+import { useAuth } from '@/context/AuthContext'
 
 function Sidebar() {
   const sidebarRef = useRef<HTMLDivElement>(null)
@@ -19,6 +22,7 @@ function Sidebar() {
   const headerRef = useRef<HTMLDivElement>(null)
   const footerRef = useRef<HTMLDivElement>(null)
   const [isIndicadoresOpen, setIsIndicadoresOpen] = useState(false)
+  const { user, logout } = useAuth()
 
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
@@ -171,14 +175,24 @@ function Sidebar() {
         ref={footerRef}
         className="p-4 border-t border-gray-200"
       >
-        <div className="flex items-center gap-3 px-4 py-3">
-          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
-            A
+        <div className="flex items-center justify-between px-2 py-2">
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+              {user?.name?.charAt(0).toUpperCase() || 'A'}
+            </div>
+            <div className="truncate">
+              <p className="text-sm font-medium text-gray-900 truncate">{user?.name} {user?.lastName}</p>
+              <p className="text-xs text-gray-500 truncate" title={user?.email}>{user?.email}</p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-medium text-gray-900">Admin</p>
-            <p className="text-xs text-gray-500">Administrador</p>
-          </div>
+          
+          <button 
+            onClick={logout}
+            className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+            title="Cerrar sesión"
+          >
+            <LogOut className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </aside>

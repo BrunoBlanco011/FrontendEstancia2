@@ -1,13 +1,13 @@
-import type { WordItem, Variable, EmotionOption, SentimentOption } from '@/types/wordSelector.types'
+import type { Variable, EmotionOption, SentimentOption } from '@/types/wordSelector.types'
 
 /**
  * API del backend para extracción de palabras clave
  * Utiliza NLTK, SpaCy y extracción de keywords
  */
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001/api'
 
 /**
- * Extrae palabras clave de un texto usando el backend
+ * Extrae palabras clave de un texto usando el backend NLP
  * @param text - Texto del cual extraer palabras
  * @param language - Idioma ('spanish' o 'english')
  * @param topN - Número de top palabras a retornar
@@ -50,7 +50,7 @@ export const extractKeywordsFromBackend = async (
 }
 
 /**
- * Extrae frases de un texto usando el backend
+ * Extrae frases de un texto usando el backend NLP
  * @param text - Texto del cual extraer frases
  * @param phraseLength - Longitud de las frases (1-5)
  * @param language - Idioma ('spanish' o 'english')
@@ -91,36 +91,8 @@ export const extractPhrasesFromBackend = async (
   }
 }
 
-/**
- * Palabras extraídas de respuestas de encuestas.
- * Simulación del procesamiento con NLTK, SpaCy y LengExtract:
- * - Tokenización y lematización (NLTK)
- * - Extracción de entidades y POS tagging (SpaCy)
- * - Extracción de keywords (LengExtract / KeyBERT)
- * - Eliminación de duplicados y stopwords
- */
-export const extractedWords: WordItem[] = [
-  { id: 'w1', text: 'preocupación' },
-  { id: 'w2', text: 'insomnio' },
-  { id: 'w3', text: 'fatiga' },
-  { id: 'w4', text: 'concentración' },
-  { id: 'w5', text: 'nerviosismo' },
-  { id: 'w6', text: 'irritabilidad' },
-  { id: 'w7', text: 'tristeza' },
-  { id: 'w8', text: 'motivación' },
-  { id: 'w9', text: 'aislamiento' },
-  { id: 'w10', text: 'tensión' },
-  { id: 'w11', text: 'desesperanza' },
-  { id: 'w12', text: 'agotamiento' },
-  { id: 'w13', text: 'inquietud' },
-  { id: 'w14', text: 'impulsividad' },
-  { id: 'w15', text: 'cefalea' },
-  { id: 'w16', text: 'taquicardia' },
-  { id: 'w17', text: 'desánimo' },
-  { id: 'w18', text: 'hiperactividad' },
-  { id: 'w19', text: 'angustia' },
-  { id: 'w20', text: 'autoestima' },
-]
+// Las palabras se extraen dinámicamente del backend via NLP
+// Ya no se usan palabras hardcoded
 
 /** Variables de análisis — coherentes con los indicadores existentes del sistema */
 export const analysisVariables: Variable[] = [

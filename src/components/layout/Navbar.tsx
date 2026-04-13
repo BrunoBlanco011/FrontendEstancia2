@@ -3,8 +3,10 @@ import { useState } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import { cn } from "@/utils/cn"
 import { Menu, MenuItem } from "@/components/ui/navbar-menu"
+import { useAuth, ROLES } from '@/context/AuthContext'
 
 function Navbar({ className }: { className?: string }) {
+  const { isAuthenticated, user } = useAuth()
   const [active, setActive] = useState<string | null>(null)
   const navigate = useNavigate()
   const location = useLocation()
@@ -25,7 +27,7 @@ function Navbar({ className }: { className?: string }) {
       }
     }
   }
-  
+
   return (
     <div className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}>
       <Menu setActive={setActive}>
@@ -41,9 +43,15 @@ function Navbar({ className }: { className?: string }) {
           <MenuItem setActive={setActive} active={active} item="FAQ" />
         </div>
 
-        <Link to="/dashboard">
-          <MenuItem setActive={setActive} active={active} item="Dashboard" />
-        </Link>
+        {isAuthenticated ? (
+          <Link to={user?.roleId === ROLES.ADMIN ? "/dashboard" : "/login"}>
+            <MenuItem setActive={setActive} active={active} item="Mi Cuenta" />
+          </Link>
+        ) : (
+          <Link to="/login">
+            <MenuItem setActive={setActive} active={active} item="Iniciar Sesión" />
+          </Link>
+        )}
       </Menu>
     </div>
   )
